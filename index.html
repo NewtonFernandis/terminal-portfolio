@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Your Name | Developer</title>
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'JetBrains Mono', 'Space Mono', monospace;
+        background: #0a0a0a;
+        color: #e0e0e0;
+        line-height: 1.6;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated gradient background */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+            circle at 20% 50%,
+            rgba(0, 255, 0, 0.08) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(100, 150, 255, 0.08) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 20%,
+            rgba(255, 200, 0, 0.05) 0%,
+            transparent 50%
+          );
+        animation: gradientShift 15s ease infinite;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      @keyframes gradientShift {
+        0%,
+        100% {
+          opacity: 0.5;
+          transform: scale(1) rotate(0deg);
+        }
+        50% {
+          opacity: 0.8;
+          transform: scale(1.1) rotate(5deg);
+        }
+      }
+
+      /* Grid overlay */
+      body::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+            rgba(0, 255, 0, 0.03) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        pointer-events: none;
+        z-index: 0;
+        animation: gridMove 20s linear infinite;
+      }
+
+      @keyframes gridMove {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(50px, 50px);
+        }
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 60px 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Terminal Header */
+      .terminal-header {
+        background: rgba(20, 20, 20, 0.9);
+        border: 1px solid #333;
+        border-radius: 8px 8px 0 0;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        backdrop-filter: blur(10px);
+        margin-bottom: -1px;
+      }
+
+      .terminal-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      .dot-red {
+        background: #ff5f56;
+        animation-delay: 0s;
+      }
+      .dot-yellow {
+        background: #ffbd2e;
+        animation-delay: 0.3s;
+      }
+      .dot-green {
+        background: #27c93f;
+        animation-delay: 0.6s;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.6;
+          transform: scale(0.9);
+        }
+      }
+
+      .terminal-title {
+        margin-left: auto;
+        color: #666;
+        font-size: 0.85rem;
+      }
+
+      .terminal-window {
+        background: rgba(15, 15, 15, 0.95);
+        border: 1px solid #333;
+        border-radius: 0 0 8px 8px;
+        padding: 30px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+
+      .cursor {
+        display: inline-block;
+        width: 10px;
+        height: 22px;
+        background: #00ff00;
+        animation: blink 1s infinite;
+        margin-left: 4px;
+      }
+
+      @keyframes blink {
+        0%,
+        50% {
+          opacity: 1;
+        }
+        51%,
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .skimmable-note {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 0, 0.1) 0%,
+          rgba(0, 255, 0, 0.05) 100%
+        );
+        border-left: 4px solid #00ff00;
+        padding: 15px 25px;
+        margin-bottom: 50px;
+        font-size: 0.9rem;
+        color: #b0b0b0;
+        border-radius: 0 4px 4px 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skimmable-note::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.05),
+          transparent
+        );
+        animation: shimmer 3s infinite;
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      h1 {
+        font-size: 3rem;
+        background: linear-gradient(
+          135deg,
+          #00ff00 0%,
+          #00cc88 50%,
+          #0099ff 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+        font-weight: 700;
+        animation: gradientText 5s ease infinite;
+        background-size: 200% 200%;
+      }
+
+      @keyframes gradientText {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        color: #00ff00;
+        margin: 60px 0 30px;
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      h2::before {
+        content: '> ';
+        color: #00ff00;
+        animation: flash 1.5s ease-in-out infinite;
+      }
+
+      @keyframes flash {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #00ff00, transparent);
+        animation: lineGrow 2s ease-in-out infinite;
+      }
+
+      @keyframes lineGrow {
+        0%,
+        100% {
+          width: 60px;
+        }
+        50% {
+          width: 120px;
+        }
+      }
+
+      h3 {
+        font-size: 1.2rem;
+        color: #ffffff;
+        margin: 30px 0 15px;
+      }
+
+      .snapshot {
+        font-size: 1.3rem;
+        color: #ffffff;
+        margin: 40px 0;
+        padding: 30px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 0, 0.1) 0%,
+          rgba(0, 255, 0, 0.02) 100%
+        );
+        border-radius: 8px;
+        border: 1px solid rgba(0, 255, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .snapshot:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 255, 0, 0.2);
+      }
+
+      .snapshot::before {
+        content: '//';
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 4rem;
+        color: rgba(0, 255, 0, 0.1);
+        font-weight: 700;
+      }
+
+      .looking-for {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 200, 0, 0.15) 0%,
+          rgba(255, 200, 0, 0.05) 100%
+        );
+        border: 1px solid rgba(255, 200, 0, 0.3);
+        padding: 25px;
+        margin: 40px 0;
+        border-radius: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .looking-for::before {
+        content: '🔍';
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        font-size: 6rem;
+        opacity: 0.1;
+      }
+
+      .looking-for h3 {
+        color: #ffc800;
+        margin-top: 0;
+        font-size: 1.3rem;
+      }
+
+      .project {
+        background: rgba(20, 20, 20, 0.8);
+        padding: 35px;
+        margin: 40px 0;
+        border-radius: 12px;
+        border: 1px solid #333;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .project::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 0, 0.05) 0%,
+          transparent 100%
+        );
+        opacity: 0;
+        transition: opacity 0.4s;
+      }
+
+      .project:hover {
+        border-color: #00ff00;
+        transform: translateX(10px) scale(1.02);
+        box-shadow: 0 10px 40px rgba(0, 255, 0, 0.2);
+      }
+
+      .project:hover::before {
+        opacity: 1;
+      }
+
+      .project-title {
+        color: #00ff00;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+        text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+      }
+
+      .project-desc {
+        color: #c0c0c0;
+        margin-bottom: 15px;
+        line-height: 1.8;
+      }
+
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 20px 0;
+      }
+
+      .tech-tag {
+        background: rgba(0, 255, 0, 0.1);
+        color: #00ff00;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        border: 1px solid rgba(0, 255, 0, 0.3);
+        transition: all 0.3s;
+        cursor: default;
+      }
+
+      .tech-tag:hover {
+        background: rgba(0, 255, 0, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+      }
+
+      .decision {
+        background: rgba(100, 150, 255, 0.05);
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        color: #b0b0b0;
+        border-left: 3px solid #6496ff;
+      }
+
+      .decision strong {
+        color: #6496ff;
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .video-placeholder {
+        background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+        border: 2px dashed #00ff00;
+        padding: 50px;
+        text-align: center;
+        margin: 25px 0;
+        border-radius: 8px;
+        color: #00ff00;
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      .video-placeholder:hover {
+        background: linear-gradient(135deg, #1f1f1f 0%, #141414 100%);
+        border-color: #00ff00;
+        box-shadow: 0 5px 20px rgba(0, 255, 0, 0.2);
+        transform: scale(1.02);
+      }
+
+      .video-placeholder::before {
+        content: '▶';
+        display: block;
+        font-size: 3rem;
+        margin-bottom: 10px;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .thinking-section {
+        background: rgba(20, 20, 20, 0.8);
+        padding: 35px;
+        margin: 40px 0;
+        border-radius: 12px;
+        border: 1px solid #333;
+      }
+
+      .thinking-item {
+        margin: 25px 0;
+        padding: 20px;
+        padding-left: 30px;
+        border-left: 3px solid #00ff00;
+        background: rgba(0, 255, 0, 0.03);
+        border-radius: 0 8px 8px 0;
+        transition: all 0.3s;
+      }
+
+      .thinking-item:hover {
+        background: rgba(0, 255, 0, 0.08);
+        padding-left: 40px;
+      }
+
+      .thinking-item h4 {
+        color: #00ff00;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+      }
+
+      .learning-log {
+        background: linear-gradient(
+          135deg,
+          rgba(100, 150, 255, 0.1) 0%,
+          rgba(100, 150, 255, 0.05) 100%
+        );
+        padding: 35px;
+        margin: 40px 0;
+        border-radius: 12px;
+        border: 1px solid rgba(100, 150, 255, 0.3);
+        position: relative;
+      }
+
+      .learning-log::before {
+        content: '📚';
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 3rem;
+        opacity: 0.2;
+      }
+
+      .learning-item {
+        margin: 20px 0;
+        font-size: 1.05rem;
+      }
+
+      .learning-item strong {
+        color: #6496ff;
+        text-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
+      }
+
+      .outcome {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 200, 0, 0.1) 0%,
+          rgba(255, 200, 0, 0.05) 100%
+        );
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 8px;
+        border-left: 4px solid #ffc800;
+      }
+
+      .outcome strong {
+        color: #ffc800;
+      }
+
+      .contact {
+        text-align: center;
+        margin-top: 80px;
+        padding: 50px 30px;
+        background: rgba(20, 20, 20, 0.8);
+        border-radius: 12px;
+        border: 1px solid #333;
+      }
+
+      .contact-text {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        color: #c0c0c0;
+        line-height: 1.8;
+      }
+
+      .contact-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .contact-link {
+        color: #00ff00;
+        text-decoration: none;
+        padding: 15px 30px;
+        border: 2px solid #00ff00;
+        border-radius: 8px;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .contact-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: #00ff00;
+        transition: left 0.3s;
+        z-index: -1;
+      }
+
+      .contact-link:hover::before {
+        left: 0;
+      }
+
+      .contact-link:hover {
+        color: #000;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 255, 0, 0.4);
+      }
+
+      /* Floating particles */
+      .particle {
+        position: fixed;
+        width: 3px;
+        height: 3px;
+        background: rgba(0, 255, 0, 0.5);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: float 10s linear infinite;
+        z-index: 0;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(100vh) translateX(0);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) translateX(100px);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 1.4rem;
+        }
+
+        .snapshot {
+          font-size: 1rem;
+        }
+
+        .container {
+          padding: 40px 15px;
+        }
+
+        .terminal-window {
+          padding: 20px;
+        }
+
+        .project {
+          padding: 25px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Floating particles -->
+    <div
+      class="particle"
+      style="left: 10%; animation-delay: 0s"
+    ></div>
+    <div
+      class="particle"
+      style="left: 30%; animation-delay: 2s"
+    ></div>
+    <div
+      class="particle"
+      style="left: 50%; animation-delay: 4s"
+    ></div>
+    <div
+      class="particle"
+      style="left: 70%; animation-delay: 6s"
+    ></div>
+    <div
+      class="particle"
+      style="left: 90%; animation-delay: 8s"
+    ></div>
+
+    <div class="container">
+      <div class="terminal-header">
+        <div class="terminal-dot dot-red"></div>
+        <div class="terminal-dot dot-yellow"></div>
+        <div class="terminal-dot dot-green"></div>
+        <div class="terminal-title">portfolio.jsx</div>
+      </div>
+
+      <div class="terminal-window">
+        <div class="skimmable-note">
+          💡 This portfolio is built for fast skimming. Explore anything that
+          sparks your interest.
+        </div>
+
+        <h1>Your Name<span class="cursor"></span></h1>
+
+        <div class="snapshot">
+          <strong>// Snapshot</strong><br />
+          [One punchy line about who you are - e.g., "Self-taught full-stack dev
+          who turns messy problems into clean, scalable solutions"]
+        </div>
+
+        <div class="looking-for">
+          <h3>🔍 What I'm Looking For</h3>
+          <p>
+            [Describe your ideal role - e.g., "A frontend or full-stack role at
+            an early-stage startup where I can own features end-to-end, work
+            closely with a design team, and ship fast."]
+          </p>
+        </div>
+
+        <h2>Top Projects</h2>
+
+        <div class="project">
+          <div class="project-title">Project #1: [Project Name]</div>
+          <div class="project-desc">
+            <strong>Problem:</strong> [One-line description of what problem this
+            solves]
+          </div>
+          <div class="project-desc">
+            <strong>Approach:</strong> [How you approached solving it - be
+            specific about your process]
+          </div>
+
+          <div class="tech-stack">
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">PostgreSQL</span>
+            <span class="tech-tag">Tailwind</span>
+          </div>
+
+          <div class="decision">
+            <strong>Why These Choices?</strong>
+            • React over Vue/Angular: [Your reasoning - e.g., "Larger ecosystem,
+            better for finding solutions quickly, and I wanted to learn hooks
+            deeply"]<br />
+            • Tailwind over CSS modules: [e.g., "Faster prototyping, no context
+            switching, built-in responsive design"]<br />
+            • PostgreSQL over MongoDB: [e.g., "Needed relational data structure,
+            ACID compliance was critical for X feature"]
+          </div>
+
+          <div class="video-placeholder">
+            📹 Add Loom/Screenrec video demo here<br />
+            <small>Link: your-video-url.com</small>
+          </div>
+
+          <div class="outcome">
+            <strong>Outcome:</strong> [Any metrics, learnings, or feedback -
+            e.g., "10 active users, learned to handle async state better, got
+            positive feedback on UX from 3 beta testers"]
+          </div>
+        </div>
+
+        <div class="project">
+          <div class="project-title">Project #2: [Project Name]</div>
+          <div class="project-desc">
+            <strong>Problem:</strong> [One-line description of what problem this
+            solves]
+          </div>
+          <div class="project-desc">
+            <strong>Approach:</strong> [How you approached solving it]
+          </div>
+
+          <div class="tech-stack">
+            <span class="tech-tag">Next.js</span>
+            <span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">Firebase</span>
+          </div>
+
+          <div class="decision">
+            <strong>Why These Choices?</strong>
+            • [Your tech decision 1]<br />
+            • [Your tech decision 2]<br />
+            • [Your tech decision 3]
+          </div>
+
+          <div class="video-placeholder">
+            📹 Add Loom/Screenrec video demo here<br />
+            <small>Link: your-video-url.com</small>
+          </div>
+
+          <div class="outcome">
+            <strong>Outcome:</strong> [Your learnings and results]
+          </div>
+        </div>
+
+        <h2>How I Think</h2>
+
+        <div class="thinking-section">
+          <div class="thinking-item">
+            <h4>What I care about when building</h4>
+            <p>
+              [e.g., "Clean code that other devs can understand, performance
+              without over-optimization, and user experience over flashy
+              features"]
+            </p>
+          </div>
+
+          <div class="thinking-item">
+            <h4>My go-to stack and why</h4>
+            <p>
+              [e.g., "React + Node.js + PostgreSQL. It's what I know best, has
+              great community support, and covers 90% of use cases. I reach for
+              Firebase when I need to ship fast without backend boilerplate."]
+            </p>
+          </div>
+
+          <div class="thinking-item">
+            <h4>What I avoid</h4>
+            <p>
+              [e.g., "Over-engineering solutions, premature optimization, and
+              trying to learn 5 frameworks at once. I'd rather go deep than
+              wide."]
+            </p>
+          </div>
+        </div>
+
+        <h2>Learning Log</h2>
+
+        <div class="learning-log">
+          <div class="learning-item">
+            <strong>Now →</strong> Learning [TypeScript / Docker / Next.js /
+            whatever you're learning]
+          </div>
+          <div class="learning-item">
+            <strong>Why →</strong> [e.g., "Hit limitations with prop types in
+            React, wanted better type safety and autocomplete"]
+          </div>
+          <div class="learning-item">
+            <strong>Building →</strong> [e.g., "Converting my task manager
+            project to TypeScript to practice real-world implementation"]
+          </div>
+        </div>
+
+        <h2>Let's Talk</h2>
+
+        <div class="contact">
+          <div class="contact-text">
+            If my work sparked a question or you're hiring for someone who
+            builds fast and learns in public, I'd love to talk.
+          </div>
+          <div class="contact-links">
+            <a
+              href="mailto:your.email@example.com"
+              class="contact-link"
+              >Email</a
+            >
+            <a
+              href="https://linkedin.com/in/yourprofile"
+              target="_blank"
+              class="contact-link"
+              >LinkedIn</a
+            >
+            <a
+              href="https://github.com/yourprofile"
+              target="_blank"
+              class="contact-link"
+              >GitHub</a
+            >
+            <a
+              href="https://calendly.com/yourlink"
+              target="_blank"
+              class="contact-link"
+              >Calendly</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
