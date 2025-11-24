@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <title>Your Name | Developer</title>
+    <title>Newton Fernandis | Developer</title>
     <link
       rel="preconnect"
       href="https://fonts.googleapis.com"
@@ -285,7 +285,7 @@
         }
       }
 
-      h2::after {
+      /* h2::after {
         content: '';
         position: absolute;
         bottom: 0;
@@ -294,7 +294,7 @@
         height: 3px;
         background: linear-gradient(90deg, #00ff00, transparent);
         animation: lineGrow 2s ease-in-out infinite;
-      }
+      } */
 
       @keyframes lineGrow {
         0%,
@@ -327,11 +327,6 @@
         position: relative;
         overflow: hidden;
         transition: transform 0.3s, box-shadow 0.3s;
-      }
-
-      .snapshot:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 255, 0, 0.2);
       }
 
       .snapshot::before {
@@ -402,7 +397,6 @@
 
       .project:hover {
         border-color: #00ff00;
-        transform: translateX(10px) scale(1.02);
         box-shadow: 0 10px 40px rgba(0, 255, 0, 0.2);
       }
 
@@ -474,21 +468,6 @@
         color: #00ff00;
         transition: all 0.3s;
         cursor: pointer;
-      }
-
-      .video-placeholder:hover {
-        background: linear-gradient(135deg, #1f1f1f 0%, #141414 100%);
-        border-color: #00ff00;
-        box-shadow: 0 5px 20px rgba(0, 255, 0, 0.2);
-        transform: scale(1.02);
-      }
-
-      .video-placeholder::before {
-        content: '▶';
-        display: block;
-        font-size: 3rem;
-        margin-bottom: 10px;
-        animation: bounce 2s infinite;
       }
 
       @keyframes bounce {
@@ -630,7 +609,7 @@
 
       .contact-link:hover {
         color: #000;
-        transform: translateY(-3px);
+        transform: translateY(0px);
         box-shadow: 0 10px 30px rgba(0, 255, 0, 0.4);
       }
 
@@ -718,53 +697,60 @@
         <div class="terminal-dot dot-red"></div>
         <div class="terminal-dot dot-yellow"></div>
         <div class="terminal-dot dot-green"></div>
-        <div class="terminal-title">portfolio.jsx</div>
+        <div class="terminal-title">portfolio</div>
       </div>
 
       <div class="terminal-window">
-        <div class="skimmable-note">
+        <!-- <div class="skimmable-note">
           💡 This portfolio is built for fast skimming. Explore anything that
           sparks your interest.
-        </div>
+        </div> -->
 
-        <h1>Your Name<span class="cursor"></span></h1>
+        <h1>Newton Fernandis<span class="cursor"></span></h1>
 
         <div class="snapshot">
           <strong>// Snapshot</strong><br />
-          [One punchy line about who you are - e.g., "Self-taught full-stack dev
-          who turns messy problems into clean, scalable solutions"]
+          Full-stack engineer who bridges the gap between "it works" and "users
+          love it". specializing in scalable React/Node architectures that drive
+          actual business metrics.
         </div>
 
         <div class="looking-for">
           <h3>🔍 What I'm Looking For</h3>
           <p>
-            [Describe your ideal role - e.g., "A frontend or full-stack role at
-            an early-stage startup where I can own features end-to-end, work
-            closely with a design team, and ship fast."]
+            I’m looking for a full-stack role where I can own features
+            end-to-end, minimize technical debt, and ship to production weekly.
           </p>
         </div>
 
         <h2>Top Projects</h2>
 
         <div class="project">
-          <div class="project-title">Project #1: [Project Name]</div>
+          <div class="project-title">Project #1: FlashShare</div>
           <div class="project-desc">
-            <strong>Problem:</strong> [One-line description of what problem this
-            solves]
+            <strong>Problem:</strong> Sensitive data should not reside
+            indefinitely in persistent communication channels (like email or
+            Slack history) after its intended recipient has retrieved it.
           </div>
           <div class="project-desc">
-            <strong>Approach:</strong> [How you approached solving it - be
-            specific about your process]
+            <strong>Approach:</strong> Developed a two-phase architecture
+            starting with a rapid prototyping stage using local file storage and
+            SQLite for metadata. The primary focus then shifted to designing and
+            implementing a cloud-native deployment model, replacing local I/O
+            with Google Cloud Storage (GCS) for scalable file storage and
+            Firestore for persistent metadata, ensuring the self-destruct logic
+            (both download-triggered and time-triggered via node-cron) functions
+            reliably in an ephemeral cloud environment.
           </div>
 
           <div class="tech-stack">
             <span class="tech-tag">React</span>
             <span class="tech-tag">Node.js</span>
-            <span class="tech-tag">PostgreSQL</span>
-            <span class="tech-tag">Tailwind</span>
+            <span class="tech-tag">Express</span>
+            <span class="tech-tag">node-cron</span>
           </div>
 
-          <div class="decision">
+          <!-- <div class="decision">
             <strong>Why These Choices?</strong>
             • React over Vue/Angular: [Your reasoning - e.g., "Larger ecosystem,
             better for finding solutions quickly, and I wanted to learn hooks
@@ -773,18 +759,18 @@
             switching, built-in responsive design"]<br />
             • PostgreSQL over MongoDB: [e.g., "Needed relational data structure,
             ACID compliance was critical for X feature"]
-          </div>
+          </div> -->
 
           <div class="video-placeholder">
             📹 Add Loom/Screenrec video demo here<br />
             <small>Link: your-video-url.com</small>
           </div>
 
-          <div class="outcome">
+          <!-- <div class="outcome">
             <strong>Outcome:</strong> [Any metrics, learnings, or feedback -
             e.g., "10 active users, learned to handle async state better, got
             positive feedback on UX from 3 beta testers"]
-          </div>
+          </div> -->
         </div>
 
         <div class="project">
