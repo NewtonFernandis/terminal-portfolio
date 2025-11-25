@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <title>Newton Fernandis | Developer</title>
+    <title>Newton // DEV</title>
     <link
       rel="preconnect"
       href="https://fonts.googleapis.com"
@@ -17,405 +17,184 @@
       crossorigin
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet"
     />
     <style>
+      :root {
+        --bg-color: #fff9f0; /* Off-white/Cream */
+        --text-color: #000000;
+        --accent-main: #ff4d4d; /* Harsh Red */
+        --accent-secondary: #4d94ff; /* Harsh Blue */
+        --accent-highlight: #ccff00; /* Neon Green */
+        --border-thickness: 3px;
+        --shadow-offset: 6px;
+        --cursor-size: 48px;
+      }
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        cursor: none; /* Hide default cursor */
       }
 
       body {
-        font-family: 'JetBrains Mono', 'Space Mono', monospace;
-        background: #0a0a0a;
-        color: #e0e0e0;
+        font-family: 'Space Grotesk', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
         line-height: 1.6;
         min-height: 100vh;
         overflow-x: hidden;
-        position: relative;
+        background-image: radial-gradient(#000 1px, transparent 1px);
+        background-size: 24px 24px; /* Dot grid pattern */
       }
 
-      /* Animated gradient background */
-      body::before {
-        content: '';
+      /* The Inverted Block Cursor */
+      .cursor-block {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(
-            circle at 20% 50%,
-            rgba(0, 255, 0, 0.08) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 80% 80%,
-            rgba(100, 150, 255, 0.08) 0%,
-            transparent 50%
-          ),
-          radial-gradient(
-            circle at 40% 20%,
-            rgba(255, 200, 0, 0.05) 0%,
-            transparent 50%
-          );
-        animation: gradientShift 15s ease infinite;
+        width: var(--cursor-size);
+        height: var(--cursor-size);
+        background-color: #fff;
         pointer-events: none;
-        z-index: 0;
+        z-index: 9999;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        mix-blend-mode: difference; /* This makes it invert colors */
+        transition: width 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+          height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
 
-      @keyframes gradientShift {
-        0%,
-        100% {
-          opacity: 0.5;
-          transform: scale(1) rotate(0deg);
-        }
-        50% {
-          opacity: 0.8;
-          transform: scale(1.1) rotate(5deg);
-        }
-      }
-
-      /* Grid overlay */
-      body::after {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: linear-gradient(
-            rgba(0, 255, 0, 0.03) 1px,
-            transparent 1px
-          ),
-          linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
-        background-size: 50px 50px;
-        pointer-events: none;
-        z-index: 0;
-        animation: gridMove 20s linear infinite;
-      }
-
-      @keyframes gridMove {
-        0% {
-          transform: translate(0, 0);
-        }
-        100% {
-          transform: translate(50px, 50px);
-        }
+      body.hovering .cursor-block {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
       }
 
       .container {
-        max-width: 1000px;
+        max-width: 1024px;
         margin: 0 auto;
-        padding: 60px 20px;
-        position: relative;
-        z-index: 1;
+        padding: 80px 24px;
+        border-left: var(--border-thickness) solid #000;
+        border-right: var(--border-thickness) solid #000;
+        background: var(--bg-color);
+        min-height: 100vh;
       }
 
-      /* Terminal Header */
-      .terminal-header {
-        background: rgba(20, 20, 20, 0.9);
-        border: 1px solid #333;
-        border-radius: 8px 8px 0 0;
-        padding: 10px 15px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        backdrop-filter: blur(10px);
-        margin-bottom: -1px;
+      .mono {
+        font-family: 'Space Mono', monospace;
       }
 
-      .terminal-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        animation: pulse 2s ease-in-out infinite;
-      }
-
-      .dot-red {
-        background: #ff5f56;
-        animation-delay: 0s;
-      }
-      .dot-yellow {
-        background: #ffbd2e;
-        animation-delay: 0.3s;
-      }
-      .dot-green {
-        background: #27c93f;
-        animation-delay: 0.6s;
-      }
-
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 1;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.6;
-          transform: scale(0.9);
-        }
-      }
-
-      .terminal-title {
-        margin-left: auto;
-        color: #666;
-        font-size: 0.85rem;
-      }
-
-      .terminal-window {
-        background: rgba(15, 15, 15, 0.95);
-        border: 1px solid #333;
-        border-radius: 0 0 8px 8px;
-        padding: 30px;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      }
-
-      .cursor {
-        display: inline-block;
-        width: 10px;
-        height: 22px;
-        background: #00ff00;
-        animation: blink 1s infinite;
-        margin-left: 4px;
-      }
-
-      @keyframes blink {
-        0%,
-        50% {
-          opacity: 1;
-        }
-        51%,
-        100% {
-          opacity: 0;
-        }
-      }
-
-      .skimmable-note {
-        background: linear-gradient(
-          135deg,
-          rgba(0, 255, 0, 0.1) 0%,
-          rgba(0, 255, 0, 0.05) 100%
-        );
-        border-left: 4px solid #00ff00;
-        padding: 15px 25px;
-        margin-bottom: 50px;
-        font-size: 0.9rem;
-        color: #b0b0b0;
-        border-radius: 0 4px 4px 0;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .skimmable-note::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.05),
-          transparent
-        );
-        animation: shimmer 3s infinite;
-      }
-
-      @keyframes shimmer {
-        0% {
-          transform: translateX(-100%);
-        }
-        100% {
-          transform: translateX(100%);
-        }
-      }
-
+      /* Typography */
       h1 {
-        font-size: 3rem;
-        background: linear-gradient(
-          135deg,
-          #00ff00 0%,
-          #00cc88 50%,
-          #0099ff 100%
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 10px;
+        font-size: 4rem;
+        line-height: 0.9;
         font-weight: 700;
-        animation: gradientText 5s ease infinite;
-        background-size: 200% 200%;
-      }
-
-      @keyframes gradientText {
-        0%,
-        100% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
+        text-transform: uppercase;
+        margin-bottom: 24px;
+        letter-spacing: -2px;
+        word-spacing: 10px;
       }
 
       h2 {
-        font-size: 1.8rem;
-        color: #00ff00;
-        margin: 60px 0 30px;
-        position: relative;
-        padding-bottom: 15px;
-      }
-
-      h2::before {
-        content: '> ';
-        color: #00ff00;
-        animation: flash 1.5s ease-in-out infinite;
-      }
-
-      @keyframes flash {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.3;
-        }
-      }
-
-      /* h2::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 60px;
-        height: 3px;
-        background: linear-gradient(90deg, #00ff00, transparent);
-        animation: lineGrow 2s ease-in-out infinite;
-      } */
-
-      @keyframes lineGrow {
-        0%,
-        100% {
-          width: 60px;
-        }
-        50% {
-          width: 120px;
-        }
+        font-family: 'Space Mono', monospace;
+        background: #000;
+        color: #fff;
+        display: inline-block;
+        padding: 8px 16px;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        margin-bottom: 40px;
+        transform: rotate(-1deg); /* Slight brutalist tilt */
       }
 
       h3 {
-        font-size: 1.2rem;
-        color: #ffffff;
-        margin: 30px 0 15px;
-      }
-
-      .snapshot {
-        font-size: 1.3rem;
-        color: #ffffff;
-        margin: 40px 0;
-        padding: 30px;
-        background: linear-gradient(
-          135deg,
-          rgba(0, 255, 0, 0.1) 0%,
-          rgba(0, 255, 0, 0.02) 100%
-        );
-        border-radius: 8px;
-        border: 1px solid rgba(0, 255, 0, 0.3);
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.3s, box-shadow 0.3s;
-      }
-
-      .snapshot::before {
-        content: '//';
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        font-size: 4rem;
-        color: rgba(0, 255, 0, 0.1);
-        font-weight: 700;
-      }
-
-      .looking-for {
-        background: linear-gradient(
-          135deg,
-          rgba(255, 200, 0, 0.15) 0%,
-          rgba(255, 200, 0, 0.05) 100%
-        );
-        border: 1px solid rgba(255, 200, 0, 0.3);
-        padding: 25px;
-        margin: 40px 0;
-        border-radius: 8px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .looking-for::before {
-        content: '🔍';
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        font-size: 6rem;
-        opacity: 0.1;
-      }
-
-      .looking-for h3 {
-        color: #ffc800;
-        margin-top: 0;
-        font-size: 1.3rem;
-      }
-
-      .project {
-        background: rgba(20, 20, 20, 0.8);
-        padding: 35px;
-        margin: 40px 0;
-        border-radius: 12px;
-        border: 1px solid #333;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .project::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          135deg,
-          rgba(0, 255, 0, 0.05) 0%,
-          transparent 100%
-        );
-        opacity: 0;
-        transition: opacity 0.4s;
-      }
-
-      .project:hover {
-        border-color: #00ff00;
-        box-shadow: 0 10px 40px rgba(0, 255, 0, 0.2);
-      }
-
-      .project:hover::before {
-        opacity: 1;
-      }
-
-      .project-title {
-        color: #00ff00;
         font-size: 1.5rem;
-        margin-bottom: 15px;
         font-weight: 700;
-        text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        border-bottom: var(--border-thickness) solid #000;
+        padding-bottom: 8px;
+        margin-bottom: 16px;
+        display: inline-block;
       }
 
-      .project-desc {
-        color: #c0c0c0;
-        margin-bottom: 15px;
-        line-height: 1.8;
+      p {
+        margin-bottom: 16px;
+        font-size: 1.1rem;
+      }
+
+      /* Utilities */
+      .brutal-box {
+        border: var(--border-thickness) solid #000;
+        box-shadow: var(--shadow-offset) var(--shadow-offset) 0px 0px #000;
+        background: #fff;
+        padding: 24px;
+        margin-bottom: 40px;
+        transition: all 0.2s ease;
+      }
+
+      .brutal-box:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0px 0px #000; /* Pressed effect */
+      }
+
+      /* Header Area */
+      .header {
+        margin-bottom: 80px;
+      }
+      .tagline {
+        font-family: 'Space Mono', monospace;
+        font-size: 1.2rem;
+        border-left: 8px solid var(--accent-main);
+        padding-left: 16px;
+      }
+
+      /* Marquee Strip */
+      .marquee-container {
+        background: var(--accent-highlight);
+        border-top: var(--border-thickness) solid #000;
+        border-bottom: var(--border-thickness) solid #000;
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 12px 0;
+        margin: 0 -27px 60px -27px; /* Break out of container padding */
+        font-family: 'Space Mono', monospace;
+        font-weight: bold;
+      }
+
+      .marquee-content {
+        display: inline-block;
+        animation: scroll 20s linear infinite;
+      }
+
+      @keyframes scroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* Projects */
+      .project-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .project-number {
+        background: #000;
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-family: 'Space Mono', monospace;
       }
 
       .tech-stack {
@@ -426,468 +205,434 @@
       }
 
       .tech-tag {
-        background: rgba(0, 255, 0, 0.1);
-        color: #00ff00;
-        padding: 8px 16px;
-        border-radius: 20px;
+        font-family: 'Space Mono', monospace;
         font-size: 0.85rem;
-        border: 1px solid rgba(0, 255, 0, 0.3);
-        transition: all 0.3s;
-        cursor: default;
+        background: var(--bg-color);
+        border: 2px solid #000;
+        padding: 4px 12px;
+        font-weight: 700;
+        transition: background 0.2s;
       }
 
       .tech-tag:hover {
-        background: rgba(0, 255, 0, 0.2);
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+        background: var(--accent-secondary);
+        color: #fff;
       }
 
-      .decision {
-        background: rgba(100, 150, 255, 0.05);
-        padding: 20px;
-        margin: 20px 0;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        color: #b0b0b0;
-        border-left: 3px solid #6496ff;
+      /* Decision & Details */
+      .decision-block {
+        background: #f0f0f0;
+        border: 2px solid #000;
+        padding: 16px;
+        font-size: 0.95rem;
+        font-family: 'Space Mono', monospace;
       }
 
-      .decision strong {
-        color: #6496ff;
+      .decision-title {
+        text-decoration: underline;
+        text-decoration-thickness: 3px;
+        margin-bottom: 8px;
         display: block;
-        margin-bottom: 10px;
+        font-weight: bold;
       }
 
-      .video-placeholder {
-        background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
-        border: 2px dashed #00ff00;
-        padding: 50px;
+      /* Brutal Button */
+      .brutal-btn {
+        display: block;
+        background: var(--accent-main);
+        color: #fff;
         text-align: center;
-        margin: 25px 0;
-        border-radius: 8px;
-        color: #00ff00;
-        transition: all 0.3s;
-        cursor: pointer;
+        padding: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: var(--border-thickness) solid #000;
+        box-shadow: 4px 4px 0 0 #000;
+        font-family: 'Space Mono', monospace;
+        margin-top: 20px;
+        transition: all 0.1s;
       }
 
-      @keyframes bounce {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
+      .brutal-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 0 #000;
+        background: #000;
+        color: var(--accent-main);
       }
 
-      .thinking-section {
-        background: rgba(20, 20, 20, 0.8);
-        padding: 35px;
-        margin: 40px 0;
-        border-radius: 12px;
-        border: 1px solid #333;
+      .brutal-btn:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0 0 0 0 #000;
       }
 
+      /* Thinking Section */
       .thinking-item {
-        margin: 25px 0;
-        padding: 20px;
-        padding-left: 30px;
-        border-left: 3px solid #00ff00;
-        background: rgba(0, 255, 0, 0.03);
-        border-radius: 0 8px 8px 0;
-        transition: all 0.3s;
+        margin-bottom: 24px;
+        border-bottom: 4px dashed #000;
+        padding-bottom: 24px;
       }
 
-      .thinking-item:hover {
-        background: rgba(0, 255, 0, 0.08);
-        padding-left: 40px;
-      }
-
-      .thinking-item h4 {
-        color: #00ff00;
+      .thinking-label {
+        font-weight: 900;
+        text-transform: uppercase;
         font-size: 1.1rem;
-        margin-bottom: 10px;
+        background: var(--accent-highlight);
+        display: inline-block;
+        padding: 2px 8px;
+        margin-bottom: 8px;
+        border: 2px solid #000;
       }
 
-      .learning-log {
-        background: linear-gradient(
-          135deg,
-          rgba(100, 150, 255, 0.1) 0%,
-          rgba(100, 150, 255, 0.05) 100%
-        );
-        padding: 35px;
-        margin: 40px 0;
-        border-radius: 12px;
-        border: 1px solid rgba(100, 150, 255, 0.3);
-        position: relative;
-      }
-
-      .learning-log::before {
-        content: '📚';
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 3rem;
-        opacity: 0.2;
-      }
-
-      .learning-item {
-        margin: 20px 0;
-        font-size: 1.05rem;
-      }
-
-      .learning-item strong {
-        color: #6496ff;
-        text-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
-      }
-
-      .outcome {
-        background: linear-gradient(
-          135deg,
-          rgba(255, 200, 0, 0.1) 0%,
-          rgba(255, 200, 0, 0.05) 100%
-        );
-        padding: 20px;
-        margin: 20px 0;
-        border-radius: 8px;
-        border-left: 4px solid #ffc800;
-      }
-
-      .outcome strong {
-        color: #ffc800;
-      }
-
+      /* Contact */
       .contact {
-        text-align: center;
         margin-top: 80px;
-        padding: 50px 30px;
-        background: rgba(20, 20, 20, 0.8);
-        border-radius: 12px;
-        border: 1px solid #333;
-      }
-
-      .contact-text {
-        font-size: 1.2rem;
-        margin-bottom: 40px;
-        color: #c0c0c0;
-        line-height: 1.8;
+        border-top: var(--border-thickness) solid #000;
+        padding-top: 40px;
+        text-align: center;
       }
 
       .contact-links {
         display: flex;
-        justify-content: center;
-        gap: 20px;
         flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 40px;
       }
 
-      .contact-link {
-        color: #00ff00;
-        text-decoration: none;
-        padding: 15px 30px;
-        border: 2px solid #00ff00;
-        border-radius: 8px;
-        transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .contact-link::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: #00ff00;
-        transition: left 0.3s;
-        z-index: -1;
-      }
-
-      .contact-link:hover::before {
-        left: 0;
-      }
-
-      .contact-link:hover {
+      .link-brutal {
+        font-family: 'Space Mono', monospace;
+        font-size: 1.2rem;
         color: #000;
-        transform: translateY(0px);
-        box-shadow: 0 10px 30px rgba(0, 255, 0, 0.4);
+        text-decoration: none;
+        background: #fff;
+        border: 2px solid #000;
+        padding: 10px 20px;
+        box-shadow: 4px 4px 0 0 #000;
+        transition: all 0.2s;
       }
 
-      /* Floating particles */
-      .particle {
-        position: fixed;
-        width: 3px;
-        height: 3px;
-        background: rgba(0, 255, 0, 0.5);
-        border-radius: 50%;
-        pointer-events: none;
-        animation: float 10s linear infinite;
-        z-index: 0;
+      .link-brutal:hover {
+        background: var(--accent-highlight);
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0 0 #000;
       }
 
-      @keyframes float {
-        0% {
-          transform: translateY(100vh) translateX(0);
-          opacity: 0;
-        }
-        10% {
-          opacity: 1;
-        }
-        90% {
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(-100vh) translateX(100px);
-          opacity: 0;
-        }
-      }
-
-      @media (max-width: 600px) {
-        h1 {
-          font-size: 2rem;
-        }
-
-        h2 {
-          font-size: 1.4rem;
-        }
-
-        .snapshot {
-          font-size: 1rem;
-        }
-
+      /* Responsive */
+      @media (max-width: 768px) {
         .container {
-          padding: 40px 15px;
+          padding: 60px 16px;
+          border: none;
+          max-width: 100%;
         }
-
-        .terminal-window {
-          padding: 20px;
+        h1 {
+          font-size: 2.5rem;
         }
-
-        .project {
-          padding: 25px;
+        .cursor-block {
+          display: none;
+        }
+        * {
+          cursor: auto;
+        }
+        .marquee-container {
+          margin: 0 -16px 40px -16px;
         }
       }
     </style>
   </head>
   <body>
-    <!-- Floating particles -->
-    <div
-      class="particle"
-      style="left: 10%; animation-delay: 0s"
-    ></div>
-    <div
-      class="particle"
-      style="left: 30%; animation-delay: 2s"
-    ></div>
-    <div
-      class="particle"
-      style="left: 50%; animation-delay: 4s"
-    ></div>
-    <div
-      class="particle"
-      style="left: 70%; animation-delay: 6s"
-    ></div>
-    <div
-      class="particle"
-      style="left: 90%; animation-delay: 8s"
-    ></div>
+    <div class="cursor-block"></div>
 
     <div class="container">
-      <div class="terminal-header">
-        <div class="terminal-dot dot-red"></div>
-        <div class="terminal-dot dot-yellow"></div>
-        <div class="terminal-dot dot-green"></div>
-        <div class="terminal-title">portfolio</div>
+      <header class="header">
+        <h1>Newton<br />Fernandis.</h1>
+        <p class="tagline">
+          I build things for the web. Sometimes they break. Usually they don't.
+        </p>
+      </header>
+
+      <div class="marquee-container">
+        <div class="marquee-content">
+          AVAILABLE FOR HIRE /// FRONTEND ARCHITECTURE /// REACT /// NEXT.JS ///
+          UI/UX /// PERFORMANCE /// ACCESSIBILITY /// AVAILABLE FOR HIRE ///
+          FRONTEND ARCHITECTURE /// REACT /// NEXT.JS /// UI/UX /// PERFORMANCE
+          /// ACCESSIBILITY ///
+        </div>
       </div>
 
-      <div class="terminal-window">
-        <!-- <div class="skimmable-note">
-          💡 This portfolio is built for fast skimming. Explore anything that
-          sparks your interest.
-        </div> -->
+      <div
+        class="brutal-box"
+        style="background: var(--accent-secondary); color: white"
+      >
+        <h3 style="border-color: white">CURRENT STATUS</h3>
+        <p class="mono">
+          Seeking a role where I own the feature from the first commit to the
+          final hotfix. I want to build systems, not just components.
+        </p>
+      </div>
 
-        <h1>Newton Fernandis<span class="cursor"></span></h1>
+      <section>
+        <h2>Projects</h2>
 
-        <div class="snapshot">
-          <strong>// Snapshot</strong><br />
-          Full-stack engineer who bridges the gap between "it works" and "users
-          love it". specializing in scalable React/Node architectures that drive
-          actual business metrics.
-        </div>
+        <div class="brutal-box">
+          <div class="project-meta">
+            <h3>Rexify - Regex Builder</h3>
+            <div class="project-number">01</div>
+          </div>
 
-        <div class="looking-for">
-          <h3>🔍 What I'm Looking For</h3>
           <p>
-            I’m looking for a full-stack role where I can own features
-            end-to-end, minimize technical debt, and ship to production weekly.
+            <strong>THE PROBLEM:</strong> Regex is "write-once, read-never"
+            code. It is cryptic, fragile, and impossible to debug six months
+            later.
+          </p>
+          <p>
+            <strong>THE FIX:</strong> Built a fluent TypeScript API that treats
+            Regex as code, not strings. It enforces syntax safety through method
+            chaining.
+          </p>
+
+          <div class="tech-stack">
+            <span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">Builder Pattern</span>
+            <span class="tech-tag">NPM</span>
+            <span class="tech-tag">Jest</span>
+          </div>
+
+          <div class="decision-block">
+            <span class="decision-title">HARD CHOICES:</span>
+            > <strong>Method Chaining vs. Config Objects:</strong> Chose
+            chaining to leverage TypeScript's autocomplete for a better
+            Developer Experience (DX).<br />
+            > <strong>Zero Dependencies:</strong> Wrote utility functions from
+            scratch to keep the bundle size tiny (<2kb) for frontend use.
+          </div>
+
+          <a
+            href="https://www.npmjs.com/package/rexify-regex"
+            target="_blank"
+            class="brutal-btn"
+            >View Package</a
+          >
+        </div>
+        <div class="brutal-box">
+          <div class="project-meta">
+            <h3>FlashShare - Ephemeral Sharing</h3>
+            <div class="project-number">02</div>
+          </div>
+
+          <p>
+            <strong>THE PROBLEM:</strong> Pasting API keys in Slack or Email
+            leaves a permanent audit trail. Secrets shouldn't have a history.
+          </p>
+          <p>
+            <strong>THE FIX:</strong> A "burn-after-reading" file server. Data
+            self-destructs instantly after one download or 24 hours. Zero
+            persistence.
+          </p>
+
+          <div class="tech-stack">
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">Express</span>
+            <span class="tech-tag">SQLite3</span>
+            <span class="tech-tag">Multer</span>
+          </div>
+
+          <div class="decision-block">
+            <span class="decision-title">HARD CHOICES:</span>
+            > <strong>SQLite over Postgres:</strong> Chose a serverless,
+            file-based DB to keep the architecture portable and deployment-ready
+            for small VPS instances.<br />
+            > <strong>Local Cleanup Strategies:</strong> Built custom cron jobs
+            (`node-cron`) to sweep the file system, ensuring no "zombie files"
+            remain after expiration.
+          </div>
+
+          <a
+            href="https://github.com/NewtonFernandis/FlashShare"
+            class="brutal-btn"
+            target="_blank"
+            >View Code</a
+          >
+        </div>
+        <!-- <div class="brutal-box">
+          <div class="project-meta">
+            <h3>Project Name 02</h3>
+            <div class="project-number">02</div>
+          </div>
+
+          <p>
+            <strong>THE PROBLEM:</strong> Users were getting lost in the
+            navigation.
+          </p>
+          <p>
+            <strong>THE FIX:</strong> Flattened the hierarchy and added
+            command-k palette.
+          </p>
+
+          <div class="tech-stack">
+            <span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">React Three Fiber</span>
+          </div>
+
+          <div class="decision-block">
+            <span class="decision-title">HARD CHOICES:</span>
+            > 3D elements are cool but heavy. Optimized models to <50kb.<br />
+            > Chose Vercel over AWS for instant preview deployments.
+          </div>
+
+          <a
+            href="#"
+            class="brutal-btn"
+            >View Deployment</a
+          >
+        </div> -->
+      </section>
+
+      <section>
+        <h2>How I Think</h2>
+
+        <div class="thinking-item">
+          <div class="thinking-label">PHILOSOPHY</div>
+          <p class="mono">
+            <strong>I value clarity over cleverness.</strong> Code is read 10x
+            more than it is written. I avoid "magic" abstractions that hide the
+            underlying logic, because when they break, they are impossible to
+            debug.
           </p>
         </div>
 
-        <h2>Top Projects</h2>
-
-        <div class="project">
-          <div class="project-title">Project #1: FlashShare</div>
-          <div class="project-desc">
-            <strong>Problem:</strong> Sensitive data should not reside
-            indefinitely in persistent communication channels (like email or
-            Slack history) after its intended recipient has retrieved it.
-          </div>
-          <div class="project-desc">
-            <strong>Approach:</strong> Developed a two-phase architecture
-            starting with a rapid prototyping stage using local file storage and
-            SQLite for metadata. The primary focus then shifted to designing and
-            implementing a cloud-native deployment model, replacing local I/O
-            with Google Cloud Storage (GCS) for scalable file storage and
-            Firestore for persistent metadata, ensuring the self-destruct logic
-            (both download-triggered and time-triggered via node-cron) functions
-            reliably in an ephemeral cloud environment.
-          </div>
-
-          <div class="tech-stack">
-            <span class="tech-tag">React</span>
-            <span class="tech-tag">Node.js</span>
-            <span class="tech-tag">Express</span>
-            <span class="tech-tag">node-cron</span>
-          </div>
-
-          <!-- <div class="decision">
-            <strong>Why These Choices?</strong>
-            • React over Vue/Angular: [Your reasoning - e.g., "Larger ecosystem,
-            better for finding solutions quickly, and I wanted to learn hooks
-            deeply"]<br />
-            • Tailwind over CSS modules: [e.g., "Faster prototyping, no context
-            switching, built-in responsive design"]<br />
-            • PostgreSQL over MongoDB: [e.g., "Needed relational data structure,
-            ACID compliance was critical for X feature"]
-          </div> -->
-
-          <div class="video-placeholder">
-            📹 Add Loom/Screenrec video demo here<br />
-            <small>Link: your-video-url.com</small>
-          </div>
-
-          <!-- <div class="outcome">
-            <strong>Outcome:</strong> [Any metrics, learnings, or feedback -
-            e.g., "10 active users, learned to handle async state better, got
-            positive feedback on UX from 3 beta testers"]
-          </div> -->
+        <div class="thinking-item">
+          <div class="thinking-label">THE STACK</div>
+          <p class="mono">
+            <strong>React + TypeScript + Node.</strong> It’s the "Honda Civic"
+            of the web—reliable, the parts are everywhere, and it handles 95% of
+            use cases perfectly. I only reach for complex tools when the scale
+            demands it.
+          </p>
         </div>
 
-        <div class="project">
-          <div class="project-title">Project #2: [Project Name]</div>
-          <div class="project-desc">
-            <strong>Problem:</strong> [One-line description of what problem this
-            solves]
-          </div>
-          <div class="project-desc">
-            <strong>Approach:</strong> [How you approached solving it]
-          </div>
-
-          <div class="tech-stack">
-            <span class="tech-tag">Next.js</span>
-            <span class="tech-tag">TypeScript</span>
-            <span class="tech-tag">Firebase</span>
-          </div>
-
-          <div class="decision">
-            <strong>Why These Choices?</strong>
-            • [Your tech decision 1]<br />
-            • [Your tech decision 2]<br />
-            • [Your tech decision 3]
-          </div>
-
-          <div class="video-placeholder">
-            📹 Add Loom/Screenrec video demo here<br />
-            <small>Link: your-video-url.com</small>
-          </div>
-
-          <div class="outcome">
-            <strong>Outcome:</strong> [Your learnings and results]
-          </div>
+        <div class="thinking-item">
+          <div class="thinking-label">ANTI-PATTERNS</div>
+          <p class="mono">
+            <strong>I avoid premature optimization.</strong> I build it to work
+            first, then I measure it, then I make it fast. Optimizing without
+            data is just guessing.
+          </p>
         </div>
+      </section>
 
-        <h2>How I Think</h2>
-
-        <div class="thinking-section">
-          <div class="thinking-item">
-            <h4>What I care about when building</h4>
-            <p>
-              [e.g., "Clean code that other devs can understand, performance
-              without over-optimization, and user experience over flashy
-              features"]
-            </p>
-          </div>
-
-          <div class="thinking-item">
-            <h4>My go-to stack and why</h4>
-            <p>
-              [e.g., "React + Node.js + PostgreSQL. It's what I know best, has
-              great community support, and covers 90% of use cases. I reach for
-              Firebase when I need to ship fast without backend boilerplate."]
-            </p>
-          </div>
-
-          <div class="thinking-item">
-            <h4>What I avoid</h4>
-            <p>
-              [e.g., "Over-engineering solutions, premature optimization, and
-              trying to learn 5 frameworks at once. I'd rather go deep than
-              wide."]
-            </p>
-          </div>
-        </div>
-
+      <section>
         <h2>Learning Log</h2>
 
-        <div class="learning-log">
-          <div class="learning-item">
-            <strong>Now →</strong> Learning [TypeScript / Docker / Next.js /
-            whatever you're learning]
+        <div
+          class="brutal-box"
+          style="border-style: dashed"
+        >
+          <div style="margin-bottom: 12px">
+            <span
+              class="thinking-label"
+              style="background: #000; color: #fff"
+              >NOW</span
+            >
+            <span
+              class="mono"
+              style="font-weight: bold; margin-left: 10px"
+              >Deep diving into C & Memory Management</span
+            >
           </div>
-          <div class="learning-item">
-            <strong>Why →</strong> [e.g., "Hit limitations with prop types in
-            React, wanted better type safety and autocomplete"]
-          </div>
-          <div class="learning-item">
-            <strong>Building →</strong> [e.g., "Converting my task manager
-            project to TypeScript to practice real-world implementation"]
-          </div>
-        </div>
 
-        <h2>Let's Talk</h2>
-
-        <div class="contact">
-          <div class="contact-text">
-            If my work sparked a question or you're hiring for someone who
-            builds fast and learns in public, I'd love to talk.
+          <div style="margin-bottom: 12px">
+            <span
+              class="thinking-label"
+              style="background: #fff"
+              >WHY</span
+            >
+            <span
+              class="mono"
+              style="margin-left: 10px"
+              >I hit a ceiling understanding how browsers handle memory and
+              rendering at the lowest level. I want to know how the machine
+              actually works, not just the framework.</span
+            >
           </div>
-          <div class="contact-links">
-            <a
-              href="mailto:your.email@example.com"
-              class="contact-link"
-              >Email</a
+
+          <div>
+            <span
+              class="thinking-label"
+              style="background: var(--accent-main); color: #fff"
+              >BUILDING</span
             >
-            <a
-              href="https://linkedin.com/in/yourprofile"
-              target="_blank"
-              class="contact-link"
-              >LinkedIn</a
-            >
-            <a
-              href="https://github.com/yourprofile"
-              target="_blank"
-              class="contact-link"
-              >GitHub</a
-            >
-            <a
-              href="https://calendly.com/yourlink"
-              target="_blank"
-              class="contact-link"
-              >Calendly</a
+            <span
+              class="mono"
+              style="margin-left: 10px"
+              >Writing a basic HTTP server from scratch (no libraries) to
+              understand the protocol anatomy.</span
             >
           </div>
         </div>
-      </div>
+      </section>
+
+      <section class="contact">
+        <p style="font-size: 1.5rem; font-weight: bold; margin-bottom: 20px">
+          READY TO BUILD?
+        </p>
+        <div class="contact-links">
+          <a
+            href="mailto:newton.fernandis@gmail.com"
+            class="link-brutal"
+            >EMAIL ME</a
+          >
+          <a
+            href="https://github.com/NewtonFernandis"
+            class="link-brutal"
+            >GITHUB</a
+          >
+          <a
+            href="https://www.linkedin.com/in/newtonfernandis"
+            class="link-brutal"
+            >LINKEDIN</a
+          >
+          <a
+            href="https://dev.to/newtonfdz"
+            class="link-brutal"
+            >DEV</a
+          >
+        </div>
+      </section>
     </div>
+
+    <script>
+      const cursor = document.querySelector('.cursor-block')
+
+      // Mouse movement
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px'
+        cursor.style.top = e.clientY + 'px'
+      })
+
+      // Hover states
+      const interactables = document.querySelectorAll(
+        'a, .brutal-box, .tech-tag',
+      )
+
+      interactables.forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          document.body.classList.add('hovering')
+          // Optional: Snap cursor to center of element for "magnetic" feel
+          // Or just keep it large (current implementation)
+        })
+        el.addEventListener('mouseleave', () => {
+          document.body.classList.remove('hovering')
+        })
+      })
+
+      // Click effect on cursor
+      document.addEventListener('mousedown', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(0.8)'
+      })
+
+      document.addEventListener('mouseup', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)'
+      })
+    </script>
   </body>
 </html>
